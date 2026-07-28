@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness App - College Project Survey</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .user-info-card {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #0f172a;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="email"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input[type="text"]:focus,
+        .input-group input[type="email"]:focus {
+            border-color: var(--primary-color);
+        }
+
+        .question-card {
+            margin-bottom: 24px;
+            padding: 18px 20px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--primary-color);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: #0f172a;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-item label {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #334155;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .option-item label:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 12px;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        #response-msg {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>PEAKFIT</h1>
+        <p>KYA REY GARIB LOG.</p>
+    </header>
+
+    <form id="surveyForm">
+        
+        <!-- User Details Section -->
+        <div class="user-info-card">
+            <div class="input-group">
+                <label for="fullName">Full Name *</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="question-card">
+            <div class="question-title">1. What is your age group?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q1" value="Under 18" required> Under 18</label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="18-25"> 18 - 25</label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="26-35"> 26 - 35</label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="36+"> Above 35</label></div>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-card">
+            <div class="question-title">2. What is your primary fitness objective?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q2" value="Weight Loss" required> Weight Loss</label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="Muscle Building"> Muscle Building</label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="Weight Gain"> Weight Gain</label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="General Fitness"> Maintaining Overall Fitness</label></div>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-card">
+            <div class="question-title">3. Where do you prefer doing your daily workouts?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q3" value="Gym" required> Commercial Gym</label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="Home"> At Home</label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="Outdoor"> Outdoor (Park / Ground)</label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="No Workout"> I currently do not work out</label></div>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-card">
+            <div class="question-title">4. How do you track your daily food intake and calories?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q4" value="Mobile App" required> Using a Mobile App</label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="Rough Estimate"> Rough Mental Estimate</label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="Diet Plan"> Following a Static Diet Chart</label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="Do Not Track"> I do not track my diet</label></div>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-card">
+            <div class="question-title">5. Where do you usually purchase health supplements (Whey, Mass Gainers)?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q5" value="Online Stores" required> E-commerce Apps (Amazon, Flipkart, Brand Sites)</label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="Local Store"> Local Supplement Stores</label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="Gym Trainer"> Direct from Gym Trainer</label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="Do Not Buy"> I do not buy supplements</label></div>
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question-card">
+            <div class="question-title">6. What is your BIGGEST concern when buying supplements online?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q6" value="Fake Products" required> Risk of Fake / Counterfeit Products</label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="High Price"> High Prices & Lack of Discounts</label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="Slow Delivery"> Slow Shipping & Delivery</label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="Wrong Guidance"> Not knowing which product suits me best</label></div>
+            </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="question-card">
+            <div class="question-title">7. Which SINGLE feature would be most valuable to you in a fitness app?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q7" value="Personalized Workouts" required> Personalized Workout Plans + Video Demos</label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="Calorie Tracker"> Calorie & Macro Diet Tracker</label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="Authentic Store"> Integrated Authentic Protein & Equipment Store</label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="AI Recommendations"> AI-based Progress Tracking & Recommendations</label></div>
+            </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="question-card">
+            <div class="question-title">8. Have you ever bought home workout equipment (Dumbbells, Resistance Bands) online?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q8" value="Yes - Multiple Times" required> Yes, multiple times</label></div>
+                <div class="option-item"><label><input type="radio" name="q8" value="Yes - Once"> Yes, once</label></div>
+                <div class="option-item"><label><input type="radio" name="q8" value="No"> No, never</label></div>
+            </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="question-card">
+            <div class="question-title">9. Would you consider buying an all-in-one subscription for workouts, diets, and store discounts?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q9" value="Yes - Monthly" required> Yes, on a Monthly Plan</label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="Yes - Yearly"> Yes, on a Discounted Yearly Plan</label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="Free Tier Only"> Only if there is a Free Plan available</label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="No"> No, I don't prefer subscriptions</label></div>
+            </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="question-card">
+            <div class="question-title">10. What is a reasonable monthly price for a premium fitness subscription?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q10" value="Under 199" required> Below ₹199 / month</label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="199-499"> ₹199 - ₹499 / month</label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="500-999"> ₹500 - ₹999 / month</label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="1000+"> Above ₹1000 / month</label></div>
+            </div>
+        </div>
+
+        <!-- Question 11 -->
+        <div class="question-card">
+            <div class="question-title">11. What is your preferred method of guidance during workouts?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q11" value="Video Tutorials" required> Pre-recorded Video Demonstrations</label></div>
+                <div class="option-item"><label><input type="radio" name="q11" value="Live Chat"> Live Chat Support with Certified Trainers</label></div>
+                <div class="option-item"><label><input type="radio" name="q11" value="AI Trainer"> AI-generated Form Checks & Tips</label></div>
+                <div class="option-item"><label><input type="radio" name="q11" value="Self Guided"> Text/Images only</label></div>
+            </div>
+        </div>
+
+        <!-- Question 12 -->
+        <div class="question-card">
+            <div class="question-title">12. How important is social/community feature (sharing progress, leaderboard) in a fitness app?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q12" value="Very Important" required> Very Important (Keeps me motivated)</label></div>
+                <div class="option-item"><label><input type="radio" name="q12" value="Somewhat Important"> Somewhat Important</label></div>
+                <div class="option-item"><label><input type="radio" name="q12" value="Not Important"> Not Important at all</label></div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">Submit Survey</button>
+    </form>
+
+    <div id="response-msg">
+        Thank you for submitting your feedback! Your response has been recorded in our database.
+    </div>
+</div>
+
+<script>
+    // AAPKA GOOGLE SCRIPT URL NICHE DEYE GAYE QUOTES ("") KE ANDAR PASTE KAREIN
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzi9EcETmWmVtqqGUm6c-Ykx_nveHOwa9Q9o2lUJzqyr_eCjdIf102WcECf5mCcW7IcrA/exec";
+
+    document.getElementById('surveyForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Submitting...";
+
+        const formData = new FormData(this);
+        const responses = {};
+
+        formData.forEach((value, key) => {
+            responses[key] = value;
+        });
+
+        // Google Sheet me data bhejne ke liye fetch request
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(responses)
+        })
+        .then(() => {
+            document.getElementById('surveyForm').style.display = 'none';
+            document.getElementById('response-msg').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('Something went wrong. Please try again!');
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit Survey";
+        });
+    });
+</script>
+
+</body>
+</html>
